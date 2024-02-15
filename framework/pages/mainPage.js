@@ -4,9 +4,8 @@ export default class MainPage extends BasePage {
     constructor(page) {
         super(page);
         this.page = page;
-        this._firstArticle = page
-            .locator('[class=tm-articles-list__item] [class*=tm-title_h2]')
-            .first();
+        this._addToBasketButton = page.locator('.product-card__add-basket');
+        this._basketButton = page.locator('.j-item-basket');
     }
 
     async open() {
