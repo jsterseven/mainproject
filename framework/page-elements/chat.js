@@ -6,8 +6,8 @@ export default class Chat {
     }
 
     async openChat() {
-        // await page.waitForSelector('.j-btn-chat-open');
-        await this._chatButton.scrollIntoViewIfNeeded(); // for CI test
+        await this.page.waitForSelector('.j-btn-chat-open');
+        // await this._chatButton.scrollIntoViewIfNeeded(); // for CI test
         await this._chatButton.click();
     }
 }
