@@ -19,6 +19,7 @@ export default class MainPage extends BasePage {
     async openBasket() {
         await this.header._basketButton.click();
         // страница не успевает догрузиться, приводит к флакам
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForSelector('h1.basket-section__header');        
+
     }
 }
