@@ -6,17 +6,17 @@ test.beforeEach(async ({ page }) => {
     await page.goto('catalog/knigi-i-kantstovary/kantstovary/bumazhnaya-produktsiya/tetradi/');
 });
 
-test.afterAll(async ({ page }) => {
-    await page.close()
-});
+// test.afterAll(async ({ page }) => {
+//     await page.close()
+// });
 
 test.describe('UI тесты для корзины', () => {
     test('Добавление товара в корзину', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await mainPage.open();
         await mainPage._addToBasketButton.first().click();
         await mainPage._basketButton.click();
+        await page.waitForLoadState('networkidle');
 
         await expect(basketPage._itemsBasketSection).toBeVisible();
     });
@@ -24,7 +24,6 @@ test.describe('UI тесты для корзины', () => {
     test('Добавление нескольких позиций товара в корзину', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await page.goto('catalog/knigi-i-kantstovary/kantstovary/bumazhnaya-produktsiya/tetradi/');
         await mainPage._addToBasketButton.nth(1).click();
         await mainPage._addToBasketButton.nth(2).click();
         await mainPage._addToBasketButton.nth(3).click();
@@ -38,7 +37,6 @@ test.describe('UI тесты для корзины', () => {
     test('Удаление товара из корзины', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await mainPage.open();
         await mainPage._addToBasketButton.first().click();
         await mainPage._basketButton.click();
 
@@ -49,7 +47,6 @@ test.describe('UI тесты для корзины', () => {
     test('Отображение счётчика количества товаров', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await page.goto('catalog/knigi-i-kantstovary/kantstovary/bumazhnaya-produktsiya/tetradi/');
         await mainPage._addToBasketButton.nth(2).click();
         await mainPage._addToBasketButton.nth(3).click();
         await mainPage._basketButton.click();
@@ -60,7 +57,6 @@ test.describe('UI тесты для корзины', () => {
     test('Переход к каталогу из корзины через кнопку "Перейти на главную"', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await mainPage.open();
         await mainPage._basketButton.click();
 
         await basketPage._goToMainPageButton.click();
