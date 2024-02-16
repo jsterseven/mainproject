@@ -2,11 +2,11 @@ import { test, expect } from '@playwright/test';
 import MainPage from '../framework/pages/mainPage';
 import BasketPage from '../framework/pages/basketPage';
 
-// test.beforeEach(async ({ page }) => {
-//     await page.goto('catalog/knigi-i-kantstovary/kantstovary/bumazhnaya-produktsiya/tetradi/');
-// });
+test.beforeEach(async ({ page }) => {
+    await page.goto('catalog/knigi-i-kantstovary/kantstovary/bumazhnaya-produktsiya/tetradi/');
+});
 
-test.afterEach(async ({ page }) => {
+test.afterAll(async ({ page }) => {
     await page.close()
 });
 
@@ -25,13 +25,11 @@ test.describe('UI тесты для корзины', () => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
         await page.goto('catalog/knigi-i-kantstovary/kantstovary/bumazhnaya-produktsiya/tetradi/');
-        // await mainPage.open();
         await mainPage._addToBasketButton.nth(1).click();
         await mainPage._addToBasketButton.nth(2).click();
         await mainPage._addToBasketButton.nth(3).click();
         await mainPage._basketButton.click();
-        await page.waitForSelector()
-        // await page.waitForLoadState('domcontentloaded');
+        await page.waitForLoadState('networkidle');
 
         const countOfProducts = await basketPage._itemProduct.count();
         expect(countOfProducts).toEqual(3);
@@ -51,7 +49,7 @@ test.describe('UI тесты для корзины', () => {
     test('Отображение счётчика количества товаров', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await mainPage.open();
+        await page.goto('catalog/knigi-i-kantstovary/kantstovary/bumazhnaya-produktsiya/tetradi/');
         await mainPage._addToBasketButton.nth(2).click();
         await mainPage._addToBasketButton.nth(3).click();
         await mainPage._basketButton.click();
