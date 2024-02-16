@@ -6,7 +6,9 @@ export default class Chat {
     }
 
     async openChat() {
-        await this.page.waitForSelector('.j-btn-chat-open');
+        // Чат на CI не хочет отображаться
+        // await this.page.waitForSelector('.j-btn-chat-open');
+        await this.page.hover('button.nav-element__burger')
         // await this._chatButton.scrollIntoViewIfNeeded(); // for CI test
         await this._chatButton.click();
     }
