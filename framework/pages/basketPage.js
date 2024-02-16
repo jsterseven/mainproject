@@ -25,7 +25,7 @@ export default class BasketPage extends BasePage {
         await this._deleteButton.nth(num).click();
     }
 
-    async clickToMainPageButton() {
+    async openMainPageByGoToCatalogButton() {
         await this._goToMainPageButton.click();
     }
 }

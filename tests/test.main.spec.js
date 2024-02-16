@@ -7,10 +7,18 @@ test.beforeEach(async ({ page }) => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 });
+
+test('Открытие окошка чата поддержки', async ({ page }) => {
+    const mainPage = new MainPage(page);
+    await mainPage.chat.openChat();
+
+    await expect(mainPage.chat._chatWindow).toBeVisible();
+});
+
 test('Открытие меню каталога через бургер-кнопку', async ({ page } ) => {
     const mainPage = new MainPage(page);
-    
-    await mainPage.header.clickBurgerButton();
+
+    await mainPage.header.openBurgerMenu();
     
     await expect(mainPage.header._burgerMenu).toBeVisible();
 });
@@ -40,11 +48,4 @@ test('Открытие страницы пустой корзины после �
 
     await expect(page).toHaveURL(/lk\/basket$/);
     await expect(basketPage._emptyBasketSection).toBeVisible();
-});
-
-test('Открытие окошка чата поддержки', async ({ page }) => {
-    const mainPage = new MainPage(page);
-    await mainPage.chat.openChat();
-
-    await expect(mainPage.chat._chatWindow).toBeVisible();
 });

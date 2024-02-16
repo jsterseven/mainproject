@@ -10,7 +10,7 @@ export default class Header {
         this._authTooltip = page.locator('.tooltip-profile--not-auth');  
     }
 
-    async clickBurgerButton() {
+    async openBurgerMenu() {
         await this._burgerButton.click();
     }
 
@@ -35,7 +35,8 @@ export default class Header {
     async openBasket() {
         await this._basketButton.click();
         // страница не успевает догрузиться, приводит к флакам
-        await this.page.waitForSelector('//*[contains(@class, "j-basket-form__content")] | //*[contains(@class, "basket-page__basket-empty")]');        
+        // await this.page.waitForSelector('//*[contains(@class, "j-basket-form__content")] | //*[contains(@class, "basket-page__basket-empty")]');      
+        await this.page.waitForSelector('//*[contains(@class, "b-btn-do-order")] | //*[contains(@class, "j-b-recommended-goods-wrapper")]');            
     }
 
 

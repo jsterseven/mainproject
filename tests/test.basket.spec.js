@@ -55,7 +55,7 @@ test.describe('UI тесты для корзины', () => {
         const basketPage = new BasketPage(page);
         await mainPage.header.openBasket();
 
-        await basketPage.clickToMainPageButton();
+        await basketPage.openMainPageByGoToCatalogButton();
         await expect(page).toHaveURL(/https:\/\/www.wildberries.ru\/$/);
     });
 });
