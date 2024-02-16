@@ -14,7 +14,7 @@ test.describe('UI тесты для корзины', () => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
         await mainPage.addItemToBasket();
-        await mainPage.openBasket();
+        await mainPage.header.openBasket();
         
         await expect(basketPage._itemsBasketSection).toBeVisible();
     });
@@ -25,7 +25,7 @@ test.describe('UI тесты для корзины', () => {
         await mainPage.addItemToBasket();
         await mainPage.addItemToBasket(1);
         await mainPage.addItemToBasket(2);
-        await mainPage.openBasket();
+        await mainPage.header.openBasket();
 
         expect(await basketPage.getCountOfItem()).toEqual(3);
     });
@@ -34,7 +34,7 @@ test.describe('UI тесты для корзины', () => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
         await mainPage.addItemToBasket();
-        await mainPage.openBasket();
+        await mainPage.header.openBasket();
 
         await basketPage.deleteItem();
         await expect(basketPage._busketIsEmptySection).toBeVisible();
@@ -45,7 +45,7 @@ test.describe('UI тесты для корзины', () => {
         const basketPage = new BasketPage(page);
         await mainPage.addItemToBasket()
         await mainPage.addItemToBasket(1)
-        await mainPage.openBasket();
+        await mainPage.header.openBasket();
 
         await expect(basketPage._basketHeader).toHaveAttribute('data-count', '2');
     });
@@ -53,7 +53,7 @@ test.describe('UI тесты для корзины', () => {
     test('Переход к каталогу из корзины через кнопку "Перейти на главную"', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await mainPage.openBasket();
+        await mainPage.header.openBasket();
 
         await basketPage.clickToMainPageButton();
         await expect(page).toHaveURL(/https:\/\/www.wildberries.ru\/$/);
