@@ -16,4 +16,16 @@ export default class BasketPage extends BasePage {
     async open() {
         await this.page.goto('/lk/basket');
     }
+
+    async getCountOfItem() {
+        return await this._itemProduct.count();
+    }
+
+    async deleteItem(num = 0) {
+        await this._deleteButton.nth(num).click();
+    }
+
+    async clickToMainPageButton() {
+        await this._goToMainPageButton.click();
+    }
 }

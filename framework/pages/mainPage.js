@@ -5,7 +5,6 @@ export default class MainPage extends BasePage {
         super(page);
         this.page = page;
         this._addToBasketButton = page.locator('.product-card__add-basket');
-        this._basketButton = page.locator('.j-item-basket');
     }
 
     async open() {
@@ -13,7 +12,13 @@ export default class MainPage extends BasePage {
         await this.page.waitForLoadState('networkidle');
     }
 
-    async clickOnFirstArticle() {
-        await this._firstArticle.click();
+    async addItemToBasket(num = 0) {
+        await this._addToBasketButton.nth(num).click();
+    }
+
+    async openBasket() {
+        await this.header._basketButton.click();
+        // страница не успевает догрузиться, приводит к флакам
+        await this.page.waitForLoadState('networkidle');
     }
 }
