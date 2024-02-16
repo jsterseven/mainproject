@@ -18,7 +18,7 @@ test('Открытие окошка чата поддержки', async ({ page 
 test('Открытие меню каталога через бургер-кнопку', async ({ page } ) => {
     const mainPage = new MainPage(page);
 
-    await mainPage.header.clickBurgerButton();
+    await mainPage.header.openBurgerMenu();
     
     await expect(mainPage.header._burgerMenu).toBeVisible();
 });

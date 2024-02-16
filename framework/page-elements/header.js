@@ -10,7 +10,7 @@ export default class Header {
         this._authTooltip = page.locator('.tooltip-profile--not-auth');  
     }
 
-    async clickBurgerButton() {
+    async openBurgerMenu() {
         await this._burgerButton.click();
     }
 
