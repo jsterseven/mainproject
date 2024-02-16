@@ -3,53 +3,49 @@ import MainPage from '../framework/pages/mainPage';
 import BasketPage from '../framework/pages/basketPage';
 
 test.beforeEach(async ({ page }) => {
-    await page.goto('catalog/knigi-i-kantstovary/kantstovary/bumazhnaya-produktsiya/tetradi/');
+    await page.goto('catalog/knigi-i-kantstovary/kantstovary/bumazhnaya-produktsiya/tetradi/'); 
+    // В указанном каталоге не попадаются размерные позиции
+    // из-за которых появляется модальное окно выбора размера
+    // которое приводит к падениям при рандомных товарах
 });
-
-// test.afterAll(async ({ page }) => {
-//     await page.close()
-// });
 
 test.describe('UI тесты для корзины', () => {
     test('Добавление товара в корзину', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await mainPage._addToBasketButton.first().click();
-        await mainPage._basketButton.click();
-        await page.waitForLoadState('networkidle');
-
+        await mainPage.addItemToBasket();
+        await mainPage.openBasket();
+        
         await expect(basketPage._itemsBasketSection).toBeVisible();
     });
 
     test('Добавление нескольких позиций товара в корзину', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await mainPage._addToBasketButton.nth(1).click();
-        await mainPage._addToBasketButton.nth(2).click();
-        await mainPage._addToBasketButton.nth(3).click();
-        await mainPage._basketButton.click();
-        await page.waitForLoadState('networkidle');
+        await mainPage.addItemToBasket();
+        await mainPage.addItemToBasket(1);
+        await mainPage.addItemToBasket(2);
+        await mainPage.openBasket();
 
-        const countOfProducts = await basketPage._itemProduct.count();
-        expect(countOfProducts).toEqual(3);
+        expect(await basketPage.getCountOfItem()).toEqual(3);
     });
 
     test('Удаление товара из корзины', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await mainPage._addToBasketButton.first().click();
-        await mainPage._basketButton.click();
+        await mainPage.addItemToBasket();
+        await mainPage.openBasket();
 
-        await basketPage._deleteButton.click();
+        await basketPage.deleteItem();
         await expect(basketPage._busketIsEmptySection).toBeVisible();
     });
 
     test('Отображение счётчика количества товаров', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await mainPage._addToBasketButton.nth(2).click();
-        await mainPage._addToBasketButton.nth(3).click();
-        await mainPage._basketButton.click();
+        await mainPage.addItemToBasket()
+        await mainPage.addItemToBasket(1)
+        await mainPage.openBasket();
 
         await expect(basketPage._basketHeader).toHaveAttribute('data-count', '2');
     });
@@ -57,9 +53,9 @@ test.describe('UI тесты для корзины', () => {
     test('Переход к каталогу из корзины через кнопку "Перейти на главную"', async ({ page }) => {
         const mainPage = new MainPage(page);
         const basketPage = new BasketPage(page);
-        await mainPage._basketButton.click();
+        await mainPage.openBasket();
 
-        await basketPage._goToMainPageButton.click();
+        await basketPage.clickToMainPageButton();
         await expect(page).toHaveURL(/https:\/\/www.wildberries.ru\/$/);
     });
 });
