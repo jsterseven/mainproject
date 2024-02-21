@@ -7,7 +7,8 @@ export default class Header {
         this._loginButton = page.locator('.navbar-pc__link[data-wba-header-name="Login"]');
         this._basketButton = page.locator('[data-wba-header-name="Cart"]');
         this._burgerMenu = page.locator('.menu-burger');
-        this._authTooltip = page.locator('.tooltip-profile--not-auth');  
+        this._authTooltip = page.locator('.tooltip-profile--not-auth');
+        this._logo = page.locator('.nav-element__logo');
     }
 
     async openBurgerMenu() {
